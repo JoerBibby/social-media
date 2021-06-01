@@ -22,12 +22,14 @@ class ForeignProfile extends React.Component{
     }
     
     componentDidMount() {
+         
         let docRef = firestore.collection("users").doc(this.props.email);
         let postsRef = firestore.collection("posts");
         let query = postsRef.where("user", "==", this.props.user);
-
+        // get user data for the user passed as prop (the user from the post that was clicked)
         docRef.get().then((doc) => {
             let user = doc.data();
+            // store data for rendering 
             this.setState({
                 username: user.username,
                 gender: user.gender,
@@ -37,9 +39,11 @@ class ForeignProfile extends React.Component{
                 loaded: true
             })
         })
+        // get all posts made by the user using the query above 
         .then(query.get()
         .then((querySnapshot) =>{
             querySnapshot.forEach((doc) => {
+                // add posts matching the query to an array in state 
                 this.setState(state => {
                     let posts = [...state.posts, doc.data()];
                     return {
@@ -59,6 +63,7 @@ class ForeignProfile extends React.Component{
   
     
     render() { 
+        // once user data comes in render users profile 
         if (this.state.loaded){ 
             return (
                 <div>
@@ -83,7 +88,7 @@ class ForeignProfile extends React.Component{
                             
                         </Card.Body>
                     </Card>
-
+                    {/* render all posts made by the user  */}
                     <div>                
                         <div>{this.state.posts && this.state.posts.map(post=> <Post key={post.id} post={post}  />)}</div>
                     </div>

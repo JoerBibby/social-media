@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button'
 
 
 const SignIn = ( {setLoggedIn} ) => {
-
+    // take input for email and password and store it 
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
 
@@ -24,7 +24,7 @@ const SignIn = ( {setLoggedIn} ) => {
     }
 
    
-
+    // sign in with firebase api, then change LoggedIn in App so that it renders the main site instead of the sign in page
     const signIn = () => {
         firebase.auth().signInWithEmailAndPassword(email, pass)
         .then(() => {

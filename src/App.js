@@ -19,72 +19,64 @@ import React, { useState } from 'react';
 
 
 
-  
-  
-  
+
+
+
 
 
 const App = () => {
 
 
   const [loggedIn, setLoggedIn] = useState(false);
-  
+
  
 
-  // if (user) {
+  // render sign in page initially, then render main site when user logs in 
 
-  //   var userRef = firestore.collection("users").doc(user.email);
-  //   userRef.get()
-  //   .then((doc) => {
-  //     setUserInfo(doc.data());
-      
-  //   })
-  
-    if(loggedIn){ 
-      return (
-        <Container fluid className="app" >
-          <Row className="justify-content-md-centre">
-            <Col>
-              <SignOut setLoggedIn={setLoggedIn}/>
-              <Profile />
-              
-            </Col>
-            <Col md="auto">
-              <div style={{margin: "auto"}}>
-                <SubmitPost  />
-              </div>
-              <div style={{marginLeft: "20px"}}>
-                <PostsFeed   />
-              </div>
-            </Col>
-            <Col ></Col>
-          </Row>
-        </Container>
-      );
-    } else {
-      return (
-        <Container>
-          <Row>
-            <Col></Col>
-            <Col >Logo and info coming soooon...</Col>
-            <Col></Col>
-          </Row>
-          <Row>
-            <Col>
-              <h3>Already have an account? Sign in</h3>
-              <SignIn setLoggedIn={setLoggedIn} />
-            </Col>
-            <Col>
-              <h3>Don't have an account? Create one now</h3>
-              <CreateAccount setLoggedIn={setLoggedIn} />
-            </Col>
-            
-          </Row>
-        </Container>
-      );
-    }
-  
-  
+  if (loggedIn) {
+    return (
+      <Container fluid className="app" >
+        <Row className="justify-content-md-centre">
+          <Col >
+            <SignOut setLoggedIn={setLoggedIn} />
+            <Profile />
+          </Col>
+          <Col md="auto">
+            <div style={{ margin: "auto" }}>
+              <SubmitPost />
+            </div>
+            <div style={{ marginLeft: "20px" }}>
+              <PostsFeed />
+            </div>
+          </Col>
+          <Col ></Col>
+        </Row>
+      </Container>
+    );
+  } else {
+    return (
+      <Container>
+        <Row>
+          <Col></Col>
+          <Col >Logo and info coming soooon...</Col>
+          <Col></Col>
+        </Row>
+        <Row>
+          <Col>
+            <h3>Already have an account? Sign in</h3>
+            <SignIn setLoggedIn={setLoggedIn} />
+          </Col>
+          <Col>
+            <h3>Don't have an account? Create one now</h3>
+            <CreateAccount setLoggedIn={setLoggedIn} />
+          </Col>
+
+        </Row>
+      </Container>
+    );
+  }
+
+
 }
 
 export default App;

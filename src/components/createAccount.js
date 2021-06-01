@@ -9,8 +9,8 @@ import { Col } from 'react-bootstrap';
 
 
 
-const CreateAccount = ( {setLoggedIn} ) => {
-
+const CreateAccount = ({ setLoggedIn }) => {
+    // take all relevant user info (email and pass for auth, the rest for personalization)
     var [email, setEmail] = useState("");
     var [pass, setPass] = useState("");
     var [username, setUsername] = useState("");
@@ -21,8 +21,8 @@ const CreateAccount = ( {setLoggedIn} ) => {
     var [city, setCity] = useState("");
 
 
-   
-    
+
+
     const takeEmail = (e) => {
         setEmail(e.target.value);
     }
@@ -54,42 +54,43 @@ const CreateAccount = ( {setLoggedIn} ) => {
     const takeCity = (e) => {
         setCity(e.target.value);
     }
-    
 
-  
+
+
 
     const makeUser = () => {
-
+        // create storage reference for profile pic
         let storageRef = storage.ref().child("profilePics/" + photo.name);
-
+        // upload profile pic 
         storageRef.put(photo).on(
             "state_changed",
-            snapshot => {},
-            error => {console.log(error);},
+            snapshot => { },
+            error => { console.log(error); },
             () => {
+                // once pic is uploaded get the url and make the document representing the user 
                 storageRef.getDownloadURL()
-                .then((url) => {
-                    firestore.collection("users").doc(email).set({
-                        email: email,
-                        pass : pass,
-                        photoUrl : url,
-                        about : about,
-                        gender: gender,
-                        location: city + ", " + country,
-                        username: username
-                    });
-                    
-                })
+                    .then((url) => {
+                        firestore.collection("users").doc(email).set({
+                            email: email,
+                            pass: pass,
+                            photoUrl: url,
+                            about: about,
+                            gender: gender,
+                            location: city + ", " + country,
+                            username: username
+                        });
+
+                    })
             }
         )
-
+        // create the user in the auth api so that the user can log in 
         firebase.auth().createUserWithEmailAndPassword(email, pass)
-                    .then(() => {
-                        setLoggedIn(true);
-                     })
+            .then(() => {
+                setLoggedIn(true);
+            })
 
 
-        
+
 
 
     }
@@ -147,12 +148,12 @@ const CreateAccount = ( {setLoggedIn} ) => {
                 <Button variant="primary" onClick={makeUser}>
                     Create account
                 </Button>
-                
-            
-                
+
+
+
             </Form>
 
-           
+
         </div>
     )
 }
