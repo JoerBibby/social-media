@@ -43,7 +43,7 @@ class Profile extends React.Component {
 
 
             } else {
-                console.log("whoops");
+                console.log("whoops");gg
             }
         });
 
