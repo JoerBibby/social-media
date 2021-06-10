@@ -8,13 +8,13 @@ import Button from 'react-bootstrap/Button'
 
 
 
-const SignIn = ( {setLoggedIn} ) => {
+const SignIn = ({ setLoggedIn }) => {
     // take input for email and password and store it 
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
 
-   
-    
+
+
     const takeEmail = (e) => {
         setEmail(e.target.value);
     }
@@ -23,20 +23,26 @@ const SignIn = ( {setLoggedIn} ) => {
         setPass(e.target.value);
     }
 
-   
+
     // sign in with firebase api, then change LoggedIn in App so that it renders the main site instead of the sign in page
     const signIn = () => {
         firebase.auth().signInWithEmailAndPassword(email, pass)
+            .then(() => {
+                setLoggedIn(true);
+            })
+
+    }
+
+    const signInAsGuest = () => {
+        firebase.auth().signInWithEmailAndPassword("joerbibby1@gmail.com", "Joesph01")
         .then(() => {
             setLoggedIn(true);
         })
-
-        
-        
     }
 
+
     return (
-        
+        <div>
         <div>
             <Form>
                 <Form.Group>
@@ -50,16 +56,20 @@ const SignIn = ( {setLoggedIn} ) => {
                     <Form.Control type="password" placeholder="Password" onChange={takePass} />
                 </Form.Group>
 
-                
+
                 <Button variant="primary" onClick={signIn}>
-                    Sign in 
+                    Sign in
                 </Button>
             </Form>
 
-           
+
+        </div>
+        <div>
+        <Button variant="primary" onClick={signInAsGuest}>Sign in as Guest</Button>
+        </div>
         </div>
 
-        
+
     )
 }
 

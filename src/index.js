@@ -7,8 +7,7 @@ import firebase from "firebase/app";
 import 'firebase/storage';
 import "firebase/firestore";
 import "firebase/auth";
-import $ from 'jquery';
-import Popper from 'popper.js';
+
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 var firebaseConfig = {

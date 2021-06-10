@@ -58,7 +58,7 @@ const App = () => {
       <Container>
         <Row>
           <Col></Col>
-          <Col >Logo and info coming soooon...</Col>
+          <Col ></Col>
           <Col></Col>
         </Row>
         <Row>

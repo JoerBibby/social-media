@@ -4,11 +4,11 @@ import "firebase/auth";
 import Button from 'react-bootstrap/Button';
 
 
-const SignOut = ( {setLoggedIn} ) => {
+const SignOut = ({ setLoggedIn }) => {
 
     const signOut = () => {
         firebase.auth()
-        .signOut();
+            .signOut();
         setLoggedIn(false);
     }
 

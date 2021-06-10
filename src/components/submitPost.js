@@ -71,7 +71,7 @@ class SubmitPost extends React.Component {
         let date = new Date();
         let dateString = date.toString();
         let id = this.state.username + dateString;
-                
+
         // upload function is different if post includes an image or not
         if (this.state.image) {
             // upload image to storage 
@@ -109,7 +109,7 @@ class SubmitPost extends React.Component {
 
 
 
-        // if theres no photo, skip the storage part and just create the document 
+            // if theres no photo, skip the storage part and just create the document 
         } else {
             firestore.collection("posts").doc(id).set({
                 body: this.state.formValue,
@@ -141,7 +141,7 @@ class SubmitPost extends React.Component {
                     </Form.Group>
 
                     <Form.Group>
-                        <Form.Control value={this.state.formValue} onChange={this.takePost} />
+                        <Form.Control as="textarea" rows={3} value={this.state.formValue} onChange={this.takePost} />
                     </Form.Group>
 
 

@@ -31,7 +31,7 @@ const PostsFeed = () => {
 
     var postsRef = firestore.collection("posts");
 
-    var query = postsRef.orderBy("createdAt");
+    var query = postsRef.orderBy("createdAt", "desc");
     // get documents in the posts collection ordered by creation time. This hook also fires if any changes to the collection is made 
     // so the posts appear in realtime 
     var [posts] = useCollectionData(query, { idField: "id" });
@@ -71,7 +71,7 @@ class Post extends React.Component {
         }
 
     }
-    
+
     componentDidMount() {
         // get current user 
         auth.onAuthStateChanged((user) => {
@@ -149,12 +149,14 @@ class Post extends React.Component {
         if (this.post.imageUrl) {
             return (
                 <Card border="primary" style={{ width: "18rem ", margin: "1em" }}>
-                    <img src={this.post.imageUrl} alt="post" />
+
 
                     <Card.Header style={{ float: "right", fontWeight: "bold" }}>
                         <Image src={this.post.profilePic} roundedCircle style={{ marginRight: "1em", maxWidth: "50%", maxHeight: "50%" }} />
                         {this.post.user}
                     </Card.Header>
+
+                    <img src={this.post.imageUrl} alt="post" />
 
                     <Card.Body>
 
@@ -203,10 +205,10 @@ class Post extends React.Component {
 
                 <Card border="primary" style={{ width: "18rem ", margin: "1em" }}>
 
-                    {/* <Card.Header style={{float: "right", fontWeight: "bold"}}>
-                <Image src={this.post.profilePic} roundedCircle style={{marginRight: "1em", maxWidth: "50%", maxHeight: "50%"}} />
-                {this.post.user}
-            </Card.Header> */}
+                    <Card.Header style={{ float: "right", fontWeight: "bold" }}>
+                        <Image src={this.post.profilePic} roundedCircle style={{ marginRight: "1em", maxWidth: "50%", maxHeight: "50%" }} />
+                        {this.post.user}
+                    </Card.Header>
                     {/* users profile and post history pops up in a modal if you click the header of the post  */}
                     <ProfileModal email={this.post.email} profilePic={this.post.profilePic} user={this.post.user} />
 
@@ -249,7 +251,7 @@ class Post extends React.Component {
                                         <Image src={comment.photoUrl} roundedCircle style={{ marginRight: "1em", maxWidth: "25%", maxHeight: "25%" }} />
                                         {comment.user}
                                     </Card.Header>
-                                    <Card.Text >{comment.body}</Card.Text>
+                                    <Card.Text >{"  "}{comment.body}</Card.Text>
                                 </div>)}
                         </div>
 

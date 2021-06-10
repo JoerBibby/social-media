@@ -39,7 +39,7 @@ class Profile extends React.Component {
                         photoUrl: user.photoUrl,
                         loaded: true
                     })
-                })
+                }).catch(err => console.log(err))
 
 
             } else {
@@ -54,7 +54,7 @@ class Profile extends React.Component {
 
 
 
-    render() {  
+    render() {
         // only render once data has come in, to avoid errors 
         if (this.state.loaded) {
             return (
