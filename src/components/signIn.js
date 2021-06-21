@@ -35,38 +35,39 @@ const SignIn = ({ setLoggedIn }) => {
 
     const signInAsGuest = () => {
         firebase.auth().signInWithEmailAndPassword("joerbibby1@gmail.com", "Joesph01")
-        .then(() => {
-            setLoggedIn(true);
-        })
+            .then(() => {
+                setLoggedIn(true);
+            })
     }
 
 
     return (
         <div>
-        <div>
-            <Form>
-                <Form.Group>
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" onChange={takeEmail} />
-                    <Form.Text className="text-muted">We'll never share your email with anyone else</Form.Text>
-                </Form.Group>
+            <div>
+                <Form>
+                    <Form.Group>
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control type="email" placeholder="Enter email" onChange={takeEmail} />
+                        <Form.Text className="text-muted">We'll never share your email with anyone else</Form.Text>
+                    </Form.Group>
 
-                <Form.Group>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" onChange={takePass} />
-                </Form.Group>
-
-
-                <Button variant="primary" onClick={signIn}>
-                    Sign in
-                </Button>
-            </Form>
+                    <Form.Group>
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" placeholder="Password" onChange={takePass} />
+                    </Form.Group>
 
 
-        </div>
-        <div>
-        <Button variant="primary" onClick={signInAsGuest}>Sign in as Guest</Button>
-        </div>
+                    <Button variant="primary" onClick={signIn}>
+                        Sign in
+                    </Button>
+                </Form>
+
+
+            </div>
+            <h5 style={{marginTop:"2em"}}>For anyone who wants to just view the site:</h5>
+            <div style={{ marginTop: "0.5em" }}>
+                <Button variant="primary" onClick={signInAsGuest}>Sign in as Guest</Button>
+            </div>
         </div>
 
 
