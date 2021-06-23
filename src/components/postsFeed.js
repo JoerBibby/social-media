@@ -1,6 +1,6 @@
 
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
@@ -27,7 +27,9 @@ import ForeignProfile from "./foreignProfile";
 // grabs recent posts from firestore, renders them via .map() into post component below
 const PostsFeed = (props) => {
 
+  
 
+    
 
     var postsRef = firestore.collection("posts");
 
@@ -93,16 +95,46 @@ class Post extends React.Component {
         });
         
     }
-
+    // need email, username, picture of both users here.
+    // need to add those as objects to friends array but they still need to be ordered by a value (probably still email).
     addFriend(){
-        var usersRef = firestore.collection("users").doc(this.props.post.email);
-        usersRef.update({
-            friends: firebase.firestore.FieldValue.arrayUnion(this.props.post.user.email)
+        var requester = {
+            email: this.props.user.email,
+            username: this.props.user.username,
+            photoUrl: this.props.user.photoUrl
+        }
+        // need to get username, photo from the post.
+        var reciever = {
+            email: this.props.post.email,
+            username: this.props.post.user,
+            photoUrl: this.props.post.profilePic
+        }
+
+        
+
+        var recieverRef = firestore.collection("users").doc(this.props.post.email);
+        
+        recieverRef.update({
+            friends: firebase.firestore.FieldValue.arrayUnion(requester)
         });
-        var usersRef2 = firestore.collection("users").doc(this.props.post.user.email);
-        usersRef2.update({
-            friends: firebase.firestore.FieldValue.arrayUnion(this.props.post.email)
+
+        var requesterRef = firestore.collection("users").doc(this.props.user.email);
+
+        requesterRef.update({
+            friends: firebase.firestore.FieldValue.arrayUnion(reciever)
         });
+
+        var usersArray = [this.props.post.email, this.props.user.email];
+        usersArray = usersArray.sort();
+        
+        firestore.collection("chats").add({
+            messages: [],
+            user0: usersArray[0],
+            user1: usersArray[1]
+        })
+        
+
+       
     }
 
     //conditionally render depending on if the post contains an image or not

@@ -18,6 +18,8 @@ const ChatWindow = (props) => {
 
     const [doc, setDoc] = useState(null);
 
+
+
     // const chatsRef = firestore.collection("chats");
     // const query = chatsRef.where("participants", "array-contains", props.user.email).limit(1);
 
@@ -28,8 +30,8 @@ const ChatWindow = (props) => {
             var usersArray = [props.user.email, props.friend];
             usersArray = usersArray.sort();
             var chatsRef = firestore.collection("chats");
-            var query = chatsRef.where("user1", "==", usersArray[0])
-                .where("user2", "==", usersArray[1]).limit(1);
+            var query = chatsRef.where("user0", "==", usersArray[0])
+                .where("user1", "==", usersArray[1]).limit(1);
                 
             query.get()
                 .then((querySnapshot) => {
@@ -40,14 +42,8 @@ const ChatWindow = (props) => {
                         setMessages(array);
                     })
                 })
-                .catch(() => {
-                    chatsRef.add({
-                        user1: usersArray[0],
-                        user2: usersArray[1],
-                        messages: []
-                    })
-                })
-            console.log(props.friend);
+               
+            
         }
         
     }, [newMessage, props.user.email, props.friend]);
@@ -67,14 +63,19 @@ const ChatWindow = (props) => {
     }
 
     return (
-        <div style={{ border: "solid" }}>
+        <div>
             <div>
-                {messages && messages.map((message) => <ChatMessage message={message} />)}
+                <h5>Currently chatting with: {props.friend}</h5>
             </div>
-            <Form onSubmit={sendMessage} >
-                <Form.Control value={newMessage} onChange={(e) => setNewMessage(e.target.value)} />
-                <Button variant="primary" type="submit">Send</Button>
-            </Form>
+            <div style={{ border: "solid" }}>
+                <div>
+                    {messages && messages.map((message) => <ChatMessage message={message} />)}
+                </div>
+                <Form onSubmit={sendMessage} >
+                    <Form.Control value={newMessage} onChange={(e) => setNewMessage(e.target.value)} />
+                    <Button variant="primary" type="submit">Send</Button>
+                </Form>
+            </div>
         </div>
     )
 }
